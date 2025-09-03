@@ -26,20 +26,57 @@ Paste the following code into your editor:
 
 const readline = require('readline-sync');
 
+let isFull = false;
+let isRested = false;
+
 const hasTorch = true;
 const hasMap = false;
+const hasWater = false;
+const hasCoat = true;
 
-console.log("You see two paths: one leads to the mountains, the other to the village.");
-const choice = readline.question("Do you go to the 'mountains' or the 'village'?");
+console.log("You're off on your quest.");
+const choice1 = readline.question("What do you do before heading off? — eat or nap?  ");
+if (choice1 === "eat") {
+  isFull = true;
+  console.log("You have a good meal. You are full.");
+} else if (choice1 === "nap") {
+  isRested = true;
+  console.log("You take a good nap. You are well rested and wide awake for your adventure!");
+} else {
+  console.log("You go on your adventure without any prep.");
+}
+
+console.log(" ");
+
+console.log("You see two paths: one leads to the mountains, the other to the village.  ");
+const choice = readline.question("Do you go to the 'mountains' or the 'village'?  ");
 
 if (choice === "mountains" && hasTorch) {
-  console.log("You safely navigate through the dark mountains.");
+  console.log("You safely navigate through the dark mountains. ");
+  let weather = readline.question("What is the weather like up there — deserty or snowy?  ");
+  if (weather === "deserty" && hasWater) {
+    console.log("It's hot, so you take a sip of water.")
+  } else if (weather === "snowy" && hasCoat) {
+    console.log("It's cold, so you put on your coat.")
+  } else if (weather === "deserty" && !hasWater) {
+    console.log("You don't have water, so you die of thirst.")
+  } else if (weather === "snowy" && !!hasCoat) {
+    console.log("You don't have a coat, so you freeze to death.")
+  } else {
+    weather = readline.question("Answer deserty or snowy:  ");
+  }
 } else if (choice === "mountains" && !hasTorch) {
-  console.log("It's too dark to proceed. You decide to turn back.");
+  console.log("It's too dark to proceed. You decide to turn back. ");
 } else if (choice === "village" || hasMap) {
-  console.log("You find your way to the village.");
+  console.log("You find your way to the village. ");
+  console.log(" ");
+  if (isFull) {
+    console.log("You ask for a bed to rest on.");
+  } else if (isRested) {
+    console.log("You ask where to grab a bite.");
+  }
 } else {
-  console.log("You get lost and wander aimlessly.");
+  console.log("You get lost and wander aimlessly. ");
 }
 
 /* 
